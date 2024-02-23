@@ -118,7 +118,12 @@ function formatResult(number) {
   if (nonDotLength <= outputMaxLength) {
     return number;
   } else {
-    if (integerPart.length >= outputMaxLength) {
+    let remainDigits = outputMaxLength - integerPart.length;
+
+    if (
+      integerPart.length >= outputMaxLength ||
+      decimalPart.substring(0, remainDigits) == 0
+    ) {
       if (integerPart.length > outputMaxLength) {
         messageContent.textContent = '錯誤：數值已超過 10 位數';
       }
@@ -126,7 +131,6 @@ function formatResult(number) {
       return Number(sign + integerPart.substring(0, outputMaxLength));
     }
 
-    let remainDigits = outputMaxLength - integerPart.length;
     return Number(
       sign + integerPart + '.' + decimalPart.substring(0, remainDigits)
     ).toFixed(remainDigits);
@@ -148,10 +152,7 @@ function handleClickEnter() {
   }
 
   calculateResult = handleCalculate(calculateArr);
-  outputStr =
-    formatResult(calculateResult) == 0
-      ? 0
-      : formatResult(calculateResult).toString();
+  outputStr = formatResult(calculateResult).toString();
 
   outputContent.textContent = outputStr;
 
