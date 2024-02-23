@@ -97,24 +97,7 @@ function handleDelete() {
 deleteBtn.addEventListener('click', handleDelete);
 
 function handleCalculate(arr) {
-  return arr.reduce((acc, cur) => {
-    switch (operatorBtn) {
-      case '+':
-        return acc + cur;
-
-      case '-':
-        return acc - cur;
-
-      case '*':
-        return acc * cur;
-
-      case '/':
-        return acc / cur;
-
-      default:
-        break;
-    }
-  });
+  return eval(arr.join(operatorBtn)).toFixed(10);
 }
 
 function formatResult(number) {
@@ -143,7 +126,7 @@ function formatResult(number) {
     let remainDigits = outputMaxLength - integerPart.length;
     return Number(
       sign + integerPart + '.' + decimalPart.substring(0, remainDigits)
-    );
+    ).toFixed(remainDigits);
   }
 }
 
@@ -162,7 +145,10 @@ function handleClickEnter() {
   }
 
   calculateResult = handleCalculate(calculateArr);
-  outputStr = formatResult(calculateResult).toString();
+  outputStr =
+    formatResult(calculateResult) == 0
+      ? 0
+      : formatResult(calculateResult).toString();
 
   outputContent.textContent = outputStr;
 
