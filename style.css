@@ -47,6 +47,10 @@ body {
 .operator-icon {
   margin-left: 8px;
 }
+.message-content {
+  color: red;
+  font-weight: 500;
+}
 .output-content {
   font-weight: 500;
   font-size: 36px;

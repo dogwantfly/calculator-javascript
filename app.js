@@ -5,6 +5,7 @@ const deleteBtn = document.querySelector('.del');
 const operatorIcon = document.querySelector('.operator-icon');
 const enterBtn = document.querySelector('.enter');
 const operators = document.querySelectorAll('.operator');
+const messageContent = document.querySelector('.message-content');
 
 const initialValue = 0;
 let outputStr = '';
@@ -66,7 +67,7 @@ function resetOperaterBtn() {
 function handleClickReset() {
   outputStr = initialValue;
   outputContent.textContent = outputStr;
-
+  messageContent.textContent = '';
   calculateArr = [];
   calculateResult = 0;
   resetOperaterBtn();
@@ -90,6 +91,7 @@ function handleDelete() {
   } else {
     outputContent.textContent = initialValue;
   }
+  messageContent.textContent = '';
 }
 
 deleteBtn.addEventListener('click', handleDelete);
@@ -134,6 +136,7 @@ function formatResult(number) {
     return number;
   } else {
     if (integerPart.length >= outputMaxLength) {
+      messageContent.textContent = '錯誤：數值已超過 10 位數';
       return Number(sign + integerPart.substring(0, outputMaxLength));
     }
 
@@ -153,7 +156,7 @@ function handleClickEnter() {
   }
 
   if (operatorBtn === '/' && calculateArr.includes(0)) {
-    outputContent.textContent = '錯誤：除數不能為 0，請點擊 Reset 重新計算';
+    messageContent.textContent = '錯誤：除數不能為 0，請點擊 Reset 重新計算';
     resetOperaterBtn();
     return;
   }
